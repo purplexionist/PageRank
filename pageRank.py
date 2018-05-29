@@ -1,3 +1,6 @@
+#py pageRank.py <file in our directory>
+#for les-mis, only finding who occurs with most people. ignoring the extra numbers
+
 import sys
 import time
 
@@ -10,23 +13,45 @@ nodeInVals = {}
 d = .85
 
 start = time.clock()
+if(sys.argv[1] == "stateborders.csv" or sys.argv[1] == "karate.csv" or sys.argv[1] == "dolphins.csv" or sys.argv[1] == "lesmis.csv"):
+	for line in allLines:
+		line = line.replace("\n", "").split(",")
+		if line[2] == "\"NB\"":
+			line[2] = "\"NE\""
+		if line[2] == "\"MV\"":
+			line[2] = "\"WV\""
+		if line[2] not in nodeCount:
+			nodeCount[line[2]] = 1
+		else:
+			nodeCount[line[2]] += 1
+		if line[0] not in nodeInVals:
+			tempList = []
+			tempList.append(line[2])
+			nodeInVals[line[0]] = tempList
+		else:
+			nodeInVals[line[0]].append(line[2])
+elif sys.argv[1] == "NCAA_football.csv":
+	for line in allLines:
+		line = line.replace("\n", "").split(",")
+		first = line[0].strip()
+		second = line[2].strip()
+		if first not in nodeCount:
+			nodeCount[first] = 0
+		if second not in nodeCount:
+			nodeCount[second] = 1
+		else:
+			nodeCount[second] += 1
+		if second not in nodeInVals:
+			tempList = []
+			nodeInVals[second] = tempList
+		if first not in nodeInVals:
+			tempList = []
+			tempList.append(second)
+			nodeInVals[first] = tempList
+		else:
+			nodeInVals[first].append(second)
 
-for line in allLines:
-	line = line.split(",")
-	if line[2] == "\"NB\"":
-		line[2] = "\"NE\""
-	if line[2] == "\"MV\"":
-		line[2] = "\"WV\""
-	if line[2] not in nodeCount:
-		nodeCount[line[2]] = 1
-	else:
-		nodeCount[line[2]] += 1
-	if line[0] not in nodeInVals:
-		tempList = []
-		tempList.append(line[2])
-		nodeInVals[line[0]] = tempList
-	else:
-		nodeInVals[line[0]].append(line[2])
+
 
 fin = time.clock() - start
 totalLen = len(nodeCount)
@@ -61,5 +86,5 @@ for thing in answer:
 new = time.clock() - start
 print("Read time is: ", fin)
 print("Process time is: ",new)
-print(i," iterations")
+print(iterations," iterations")
 
