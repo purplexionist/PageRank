@@ -50,6 +50,27 @@ elif sys.argv[1] == "NCAA_football.csv":
 			nodeInVals[first] = tempList
 		else:
 			nodeInVals[first].append(second)
+elif sys.argv[1] == "wiki-Vote.txt" or sys.argv[1] == "p2p-Gnutella05.txt" or sys.argv[1] == "soc-sign-Slashdot081106.txt" or sys.argv[1] == "amazon0505.txt" or sys.argv[1] == "soc-LiveJournal1.txt":
+	allLines = allLines[4:]
+	for line in allLines:
+		line = line.split()
+		first = line[0]
+		second = line[1]
+		if second not in nodeCount:
+			nodeCount[second] = 0
+		if first not in nodeCount:
+			nodeCount[first] = 1
+		else:
+			nodeCount[first] += 1
+		if first not in nodeInVals:
+			tempList = []
+			nodeInVals[first] = tempList
+		if second not in nodeInVals:
+			tempList = []
+			tempList.append(first)
+			nodeInVals[second] = tempList
+		else:
+			nodeInVals[second].append(first)
 
 
 
