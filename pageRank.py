@@ -95,7 +95,6 @@ elif sys.argv[1] == "soc-LiveJournal1.txt":
 				nodeInVals[second].append(first)
 
 f.close()
-print("done reading")
 fin = time.clock() - start
 totalLen = len(nodeCount)
 
@@ -107,7 +106,6 @@ epsilon = 9999
 iterations = 0
 while epsilon >= (1/totalLen):
 	iterations += 1
-	print(iterations)
 	epsilon = 0
 	tempDict = {}
 	for node in nodeVal.keys():
@@ -123,8 +121,10 @@ answer = nodeVal.items()
 answer = sorted(answer, key=lambda tup: tup[1], reverse = True)
 
 i = 1
-for thing in answer:
-	print(i," ",thing[0]," with pagerank ",thing[1])
+answerLen = len(answer)
+iterCount = min(answerLen, 50)
+for j in range(0, iterCount):
+	print(i," ",answer[j][0]," with pagerank ",answer[j][1])
 	i += 1
 
 
