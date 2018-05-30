@@ -76,8 +76,8 @@ elif sys.argv[1] == "soc-LiveJournal1.txt":
 	for line in f:
 		if line[0] != "#":
 			line = line.split()
-			first = line[0]
-			second = line[1]
+			first = int(line[0])
+			second = int(line[1])
 			if second not in nodeCount:
 				nodeCount[second] = 0
 			if first not in nodeCount:
@@ -94,7 +94,7 @@ elif sys.argv[1] == "soc-LiveJournal1.txt":
 			else:
 				nodeInVals[second].append(first)
 
-
+f.close()
 print("done reading")
 fin = time.clock() - start
 totalLen = len(nodeCount)
@@ -105,8 +105,9 @@ for node in nodeCount.keys():
 start = time.clock()
 epsilon = 9999
 iterations = 0
-while epsilon >= (1/totalLen)/1000:
+while epsilon >= (1/totalLen):
 	iterations += 1
+	print(iterations)
 	epsilon = 0
 	tempDict = {}
 	for node in nodeVal.keys():
@@ -116,7 +117,7 @@ while epsilon >= (1/totalLen)/1000:
 		epsilon += abs(nodeVal[node] - total)
 		tempDict[node] = total
 	nodeVal = tempDict
-	epsilon /= totalLen
+	tempDict = None
 
 answer = nodeVal.items()
 answer = sorted(answer, key=lambda tup: tup[1], reverse = True)
@@ -125,6 +126,7 @@ i = 1
 for thing in answer:
 	print(i," ",thing[0]," with pagerank ",thing[1])
 	i += 1
+
 
 new = time.clock() - start
 print("Read time is: ", fin)
