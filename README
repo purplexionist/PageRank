@@ -1,0 +1,7 @@
+William Eggert, Arshan Hashemi, Alex Braksator
+
+To run the program type
+
+python pageRank.py filename
+
+We do not include any additional flags or extra credit.
